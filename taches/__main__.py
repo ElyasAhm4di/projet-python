@@ -14,6 +14,7 @@ def construire_parser():
     a.add_argument("titre")
 
     sous.add_parser("lister", help="afficher les tâches")
+    sous.add_parser("stats", help="afficher la progression")
 
     for nom, aide in (("terminer", "marquer une tâche comme faite"),
                       ("supprimer", "supprimer une tâche")):
@@ -35,6 +36,10 @@ def main(argv=None):
             for t in g.taches:
                 case = "x" if t.terminee else " "
                 print(f"[{case}] #{t.id} {t.titre}")
+        elif args.commande == "stats":
+            s = g.stats()
+            print(f"{s['terminees']}/{s['total']} tâches terminées "
+                  f"({s['pourcentage']} %), {s['restantes']} restante(s).")
         elif args.commande == "terminer":
             t = g.terminer(args.id)
             print(f"Tâche #{t.id} terminée.")

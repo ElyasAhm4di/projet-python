@@ -37,3 +37,10 @@ class Gestionnaire:
         self.taches.remove(tache)
         self.stockage.sauvegarder(self.taches)
         return tache
+
+    def stats(self):
+        total = len(self.taches)
+        faites = sum(t.terminee for t in self.taches)
+        pourcent = round(100 * faites / total) if total else 0
+        return {"total": total, "terminees": faites, "restantes": total - faites,
+                "pourcentage": pourcent}

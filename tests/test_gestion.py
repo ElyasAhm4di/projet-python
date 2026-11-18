@@ -42,6 +42,16 @@ class TestGestionnaire(unittest.TestCase):
         recharge = Gestionnaire(Stockage(self.chemin))
         self.assertEqual(recharge.taches[0].titre, "A")
 
+    def test_stats(self):
+        self.g.ajouter("A")
+        t = self.g.ajouter("B")
+        self.g.terminer(t.id)
+        self.assertEqual(self.g.stats(),
+                         {"total": 2, "terminees": 1, "restantes": 1, "pourcentage": 50})
+
+    def test_stats_liste_vide(self):
+        self.assertEqual(self.g.stats()["pourcentage"], 0)
+
 
 if __name__ == "__main__":
     unittest.main()
