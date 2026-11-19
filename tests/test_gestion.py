@@ -94,6 +94,13 @@ class TestGestionnaire(unittest.TestCase):
         retard = self.g.en_retard(aujourd_hui=date(2026, 6, 1))
         self.assertEqual([t.titre for t in retard], ["Passée"])
 
+    def test_nettoyer(self):
+        self.g.ajouter("A")
+        b = self.g.ajouter("B")
+        self.g.terminer(b.id)
+        self.assertEqual(self.g.nettoyer(), 1)
+        self.assertEqual([t.titre for t in self.g.taches], ["A"])
+
 
 if __name__ == "__main__":
     unittest.main()

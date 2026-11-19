@@ -70,6 +70,13 @@ class Gestionnaire:
         self.stockage.sauvegarder(self.taches)
         return tache
 
+    def nettoyer(self):
+        """Supprime les tâches terminées et renvoie combien ont été retirées."""
+        avant = len(self.taches)
+        self.taches = [t for t in self.taches if not t.terminee]
+        self.stockage.sauvegarder(self.taches)
+        return avant - len(self.taches)
+
     def stats(self):
         total = len(self.taches)
         faites = sum(t.terminee for t in self.taches)

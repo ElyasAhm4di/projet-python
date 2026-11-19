@@ -21,6 +21,7 @@ def construire_parser():
     filtre.add_argument("--a-faire", dest="statut", action="store_const", const="a_faire")
     filtre.add_argument("--faites", dest="statut", action="store_const", const="faites")
     sous.add_parser("stats", help="afficher la progression")
+    sous.add_parser("nettoyer", help="supprimer les tâches terminées")
 
     for nom, aide in (("terminer", "marquer une tâche comme faite"),
                       ("supprimer", "supprimer une tâche")):
@@ -56,6 +57,8 @@ def main(argv=None):
             s = g.stats()
             print(f"{s['terminees']}/{s['total']} tâches terminées "
                   f"({s['pourcentage']} %), {s['restantes']} restante(s).")
+        elif args.commande == "nettoyer":
+            print(f"{g.nettoyer()} tâche(s) terminée(s) supprimée(s).")
         elif args.commande == "terminer":
             t = g.terminer(args.id)
             print(f"Tâche #{t.id} terminée.")
