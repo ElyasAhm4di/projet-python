@@ -62,6 +62,14 @@ class TestGestionnaire(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.g.ajouter("A", "urgente")
 
+    def test_lister_filtres(self):
+        self.g.ajouter("A")
+        b = self.g.ajouter("B")
+        self.g.terminer(b.id)
+        self.assertEqual([t.titre for t in self.g.lister()], ["A", "B"])
+        self.assertEqual([t.titre for t in self.g.lister("a_faire")], ["A"])
+        self.assertEqual([t.titre for t in self.g.lister("faites")], ["B"])
+
 
 if __name__ == "__main__":
     unittest.main()

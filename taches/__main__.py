@@ -15,7 +15,10 @@ def construire_parser():
     a.add_argument("titre")
     a.add_argument("-p", "--priorite", choices=PRIORITES, default="normale")
 
-    sous.add_parser("lister", help="afficher les tâches")
+    li = sous.add_parser("lister", help="afficher les tâches")
+    filtre = li.add_mutually_exclusive_group()
+    filtre.add_argument("--a-faire", dest="statut", action="store_const", const="a_faire")
+    filtre.add_argument("--faites", dest="statut", action="store_const", const="faites")
     sous.add_parser("stats", help="afficher la progression")
 
     for nom, aide in (("terminer", "marquer une tâche comme faite"),
@@ -33,9 +36,10 @@ def main(argv=None):
             t = g.ajouter(args.titre, args.priorite)
             print(f"Tâche #{t.id} ajoutée : {t.titre}")
         elif args.commande == "lister":
-            if not g.taches:
+            taches = g.lister(args.statut)
+            if not taches:
                 print("Aucune tâche.")
-            for t in g.taches:
+            for t in taches:
                 case = "x" if t.terminee else " "
                 marque = " (!)" if t.priorite == "haute" else ""
                 print(f"[{case}] #{t.id} {t.titre}{marque}")

@@ -28,6 +28,14 @@ class Gestionnaire:
         self.stockage.sauvegarder(self.taches)
         return tache
 
+    def lister(self, statut=None):
+        """statut : None (toutes), "a_faire" ou "faites"."""
+        if statut == "a_faire":
+            return [t for t in self.taches if not t.terminee]
+        if statut == "faites":
+            return [t for t in self.taches if t.terminee]
+        return list(self.taches)
+
     def terminer(self, id_tache):
         tache = self._trouver(id_tache)
         tache.terminee = True
