@@ -70,6 +70,16 @@ class TestGestionnaire(unittest.TestCase):
         self.assertEqual([t.titre for t in self.g.lister("a_faire")], ["A"])
         self.assertEqual([t.titre for t in self.g.lister("faites")], ["B"])
 
+    def test_renommer(self):
+        t = self.g.ajouter("A")
+        self.g.renommer(t.id, "  Nouveau titre ")
+        self.assertEqual(self.g.taches[0].titre, "Nouveau titre")
+
+    def test_renommer_titre_vide(self):
+        t = self.g.ajouter("A")
+        with self.assertRaises(ValueError):
+            self.g.renommer(t.id, "")
+
 
 if __name__ == "__main__":
     unittest.main()

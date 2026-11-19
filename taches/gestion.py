@@ -42,6 +42,15 @@ class Gestionnaire:
         self.stockage.sauvegarder(self.taches)
         return tache
 
+    def renommer(self, id_tache, nouveau_titre):
+        nouveau_titre = nouveau_titre.strip()
+        if not nouveau_titre:
+            raise ValueError("Le titre ne peut pas être vide")
+        tache = self._trouver(id_tache)
+        tache.titre = nouveau_titre
+        self.stockage.sauvegarder(self.taches)
+        return tache
+
     def supprimer(self, id_tache):
         tache = self._trouver(id_tache)
         self.taches.remove(tache)

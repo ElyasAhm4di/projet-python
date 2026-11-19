@@ -25,6 +25,9 @@ def construire_parser():
                       ("supprimer", "supprimer une tâche")):
         s = sous.add_parser(nom, help=aide)
         s.add_argument("id", type=int)
+    r = sous.add_parser("renommer", help="changer le titre d'une tâche")
+    r.add_argument("id", type=int)
+    r.add_argument("titre")
     return p
 
 
@@ -50,6 +53,9 @@ def main(argv=None):
         elif args.commande == "terminer":
             t = g.terminer(args.id)
             print(f"Tâche #{t.id} terminée.")
+        elif args.commande == "renommer":
+            t = g.renommer(args.id, args.titre)
+            print(f"Tâche #{t.id} renommée : {t.titre}")
         elif args.commande == "supprimer":
             t = g.supprimer(args.id)
             print(f"Tâche #{t.id} supprimée.")
