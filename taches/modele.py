@@ -4,6 +4,7 @@ import json
 from dataclasses import asdict, dataclass, field
 from datetime import date
 from pathlib import Path
+from typing import Optional
 
 
 PRIORITES = ("basse", "normale", "haute")
@@ -15,6 +16,7 @@ class Tache:
     titre: str
     terminee: bool = False
     priorite: str = "normale"
+    echeance: Optional[str] = None
     creee_le: str = field(default_factory=lambda: date.today().isoformat())
 
 

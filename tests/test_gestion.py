@@ -1,5 +1,6 @@
 import tempfile
 import unittest
+from datetime import date
 from pathlib import Path
 
 from taches.gestion import Gestionnaire
@@ -79,6 +80,19 @@ class TestGestionnaire(unittest.TestCase):
         t = self.g.ajouter("A")
         with self.assertRaises(ValueError):
             self.g.renommer(t.id, "")
+
+    def test_echeance_invalide(self):
+        with self.assertRaises(ValueError):
+            self.g.ajouter("A", echeance="31/12/2026")
+
+    def test_en_retard(self):
+        self.g.ajouter("Passée", echeance="2026-01-01")
+        self.g.ajouter("Future", echeance="2027-01-01")
+        self.g.ajouter("Sans date")
+        faite = self.g.ajouter("Passée mais faite", echeance="2026-01-01")
+        self.g.terminer(faite.id)
+        retard = self.g.en_retard(aujourd_hui=date(2026, 6, 1))
+        self.assertEqual([t.titre for t in retard], ["Passée"])
 
 
 if __name__ == "__main__":

@@ -14,6 +14,7 @@ def construire_parser():
     a = sous.add_parser("ajouter", help="ajouter une tâche")
     a.add_argument("titre")
     a.add_argument("-p", "--priorite", choices=PRIORITES, default="normale")
+    a.add_argument("-e", "--echeance", metavar="AAAA-MM-JJ")
 
     li = sous.add_parser("lister", help="afficher les tâches")
     filtre = li.add_mutually_exclusive_group()
@@ -36,15 +37,20 @@ def main(argv=None):
     g = Gestionnaire()
     try:
         if args.commande == "ajouter":
-            t = g.ajouter(args.titre, args.priorite)
+            t = g.ajouter(args.titre, args.priorite, args.echeance)
             print(f"Tâche #{t.id} ajoutée : {t.titre}")
         elif args.commande == "lister":
             taches = g.lister(args.statut)
+            retard = {t.id for t in g.en_retard()}
             if not taches:
                 print("Aucune tâche.")
             for t in taches:
                 case = "x" if t.terminee else " "
                 marque = " (!)" if t.priorite == "haute" else ""
+                if t.echeance:
+                    marque += f" — pour le {t.echeance}"
+                if t.id in retard:
+                    marque += " EN RETARD"
                 print(f"[{case}] #{t.id} {t.titre}{marque}")
         elif args.commande == "stats":
             s = g.stats()
