@@ -52,6 +52,16 @@ class TestGestionnaire(unittest.TestCase):
     def test_stats_liste_vide(self):
         self.assertEqual(self.g.stats()["pourcentage"], 0)
 
+    def test_priorite_par_defaut(self):
+        self.assertEqual(self.g.ajouter("A").priorite, "normale")
+
+    def test_priorite_haute(self):
+        self.assertEqual(self.g.ajouter("A", "haute").priorite, "haute")
+
+    def test_priorite_invalide(self):
+        with self.assertRaises(ValueError):
+            self.g.ajouter("A", "urgente")
+
 
 if __name__ == "__main__":
     unittest.main()

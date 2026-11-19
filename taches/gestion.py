@@ -1,6 +1,6 @@
 """Opérations sur la liste des tâches."""
 
-from .modele import Stockage, Tache
+from .modele import PRIORITES, Stockage, Tache
 
 
 class Gestionnaire:
@@ -17,11 +17,13 @@ class Gestionnaire:
                 return t
         raise KeyError(f"Aucune tâche avec l'id {id_tache}")
 
-    def ajouter(self, titre):
+    def ajouter(self, titre, priorite="normale"):
         titre = titre.strip()
         if not titre:
             raise ValueError("Le titre ne peut pas être vide")
-        tache = Tache(id=self._prochain_id(), titre=titre)
+        if priorite not in PRIORITES:
+            raise ValueError(f"Priorité invalide : {priorite}")
+        tache = Tache(id=self._prochain_id(), titre=titre, priorite=priorite)
         self.taches.append(tache)
         self.stockage.sauvegarder(self.taches)
         return tache

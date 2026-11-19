@@ -4,6 +4,7 @@ import argparse
 import sys
 
 from .gestion import Gestionnaire
+from .modele import PRIORITES
 
 
 def construire_parser():
@@ -12,6 +13,7 @@ def construire_parser():
 
     a = sous.add_parser("ajouter", help="ajouter une tâche")
     a.add_argument("titre")
+    a.add_argument("-p", "--priorite", choices=PRIORITES, default="normale")
 
     sous.add_parser("lister", help="afficher les tâches")
     sous.add_parser("stats", help="afficher la progression")
@@ -28,14 +30,15 @@ def main(argv=None):
     g = Gestionnaire()
     try:
         if args.commande == "ajouter":
-            t = g.ajouter(args.titre)
+            t = g.ajouter(args.titre, args.priorite)
             print(f"Tâche #{t.id} ajoutée : {t.titre}")
         elif args.commande == "lister":
             if not g.taches:
                 print("Aucune tâche.")
             for t in g.taches:
                 case = "x" if t.terminee else " "
-                print(f"[{case}] #{t.id} {t.titre}")
+                marque = " (!)" if t.priorite == "haute" else ""
+                print(f"[{case}] #{t.id} {t.titre}{marque}")
         elif args.commande == "stats":
             s = g.stats()
             print(f"{s['terminees']}/{s['total']} tâches terminées "

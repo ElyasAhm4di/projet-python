@@ -6,11 +6,15 @@ from datetime import date
 from pathlib import Path
 
 
+PRIORITES = ("basse", "normale", "haute")
+
+
 @dataclass
 class Tache:
     id: int
     titre: str
     terminee: bool = False
+    priorite: str = "normale"
     creee_le: str = field(default_factory=lambda: date.today().isoformat())
 
 
