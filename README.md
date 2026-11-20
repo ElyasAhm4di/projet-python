@@ -13,6 +13,16 @@ python -m taches supprimer 1
 python -m taches stats
 ```
 
+## Jeu du pendu
+
+Le grand classique des pauses entre deux cours : deviner un mot lettre par lettre
+avant que le bonhomme soit entièrement dessiné (6 erreurs maximum).
+
+```bash
+python -m pendu              # mot tiré au hasard
+python -m pendu --mot examen # imposer le mot (pour jouer à deux)
+```
+
 ## Tests
 
 ```bash
