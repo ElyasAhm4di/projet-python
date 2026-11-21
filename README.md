@@ -23,6 +23,22 @@ python -m pendu              # mot tiré au hasard
 python -m pendu --mot examen # imposer le mot (pour jouer à deux)
 ```
 
+## Jeu du plus ou moins
+
+L'exercice incontournable des premiers TP : l'ordinateur choisit un nombre secret,
+il faut le trouver en suivant les indices « plus » / « moins ».
+
+| Niveau      | Nombres    | Essais |
+|-------------|------------|--------|
+| `facile`    | 1 à 50     | 10     |
+| `moyen`     | 1 à 100    | 7      |
+| `difficile` | 1 à 1000   | 10     |
+
+```bash
+python -m plusoumoins                      # niveau moyen
+python -m plusoumoins --niveau difficile
+```
+
 ## Tests
 
 ```bash
