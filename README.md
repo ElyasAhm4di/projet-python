@@ -39,6 +39,18 @@ python -m plusoumoins                      # niveau moyen
 python -m plusoumoins --niveau difficile
 ```
 
+## Jeu du morpion
+
+Le tic-tac-toe des fonds d'amphi : aligner trois symboles sur une grille 3x3.
+Les cases se choisissent avec leur numéro (1 en haut à gauche, 9 en bas à droite).
+L'ordinateur en niveau `difficile` utilise l'algorithme minimax et ne perd jamais.
+
+```bash
+python -m morpion                                   # à deux sur le même clavier
+python -m morpion --contre-ia --commencer           # contre l'ordinateur, tu joues X
+python -m morpion --contre-ia --niveau facile       # ordinateur qui joue au hasard
+```
+
 ## Tests
 
 ```bash
